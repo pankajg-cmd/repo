@@ -18,8 +18,9 @@ public class CreditServiceImpl implements CreditService {
     @Autowired
     DebitServiceImpl debitService;
 
+    @Transactional
   public void credit(CreditDto creditDto) {
-      if(!creditDto.getFromEmail().equalsIgnoreCase(creditDto.getFromEmail())) {
+      if(!creditDto.getFromEmail().equalsIgnoreCase(creditDto.getToEmail())) {
           debitService.debit(creditDto);
       }
       User userFrom =  userService.findByEmail(creditDto.getFromEmail());
