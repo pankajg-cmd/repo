@@ -26,4 +26,9 @@ public class TransactionController {
         transactionService.reversal(transactionDto);
         return "success";
     }
+
+    @RequestMapping(value = "/status", method = RequestMethod.POST)
+    String status(@Valid @RequestBody TransactionDto transactionDto) {
+        return transactionService.status(transactionDto);
+    }
 }

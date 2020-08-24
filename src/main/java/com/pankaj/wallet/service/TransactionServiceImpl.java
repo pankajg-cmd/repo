@@ -52,4 +52,20 @@ public class TransactionServiceImpl implements TransactionService {
            creditService.credit(creditDto);
        }
     }
+
+    @Transactional
+    public String status(TransactionDto transactionDto) {
+        Optional<Debit> optional = debitRepository.findById(Long.parseLong(transactionDto.getTransactionId()));
+        if(optional.isPresent()) {
+            Debit debit = optional.get();
+            return "Succefully Debited "+ debit.getAmount()+ " from " + debit.getUser().getEmail();
+        }
+        Optional<Credit> optionalCredit = creditRepository.findById(Long.parseLong(transactionDto.getTransactionId()));
+        if(optionalCredit.isPresent()) {
+            Credit credit = optionalCredit.get();
+            return "Succefully Credited "+ credit.getAmount()+ " to " + credit.getUser().getEmail();
+        }
+        return "Invalid transaction id "+transactionDto.getTransactionId();
+    }
+
 }
